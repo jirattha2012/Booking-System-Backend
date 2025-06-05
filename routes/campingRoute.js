@@ -12,7 +12,6 @@ const {
 const  { authenticate } = require('../middlewares/auth')
 
 
-
 // Get camping
 router.get('/camping', authenticate, getCampingList)
 

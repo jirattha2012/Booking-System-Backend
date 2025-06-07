@@ -14,12 +14,20 @@ exports.createProfile = async (req, res, next) => {
         const email = req.user.emailAddresses[0].emailAddress
         // console.log('email =====', id)
 
-        const profile = await prisma.profile.create({
-            data: {
+        const profile = await prisma.profile.upsert({
+            where: {
+                clerk_id: id
+            },
+            create: {
+                clerk_id: id,
                 first_name: first_name,
                 last_name: last_name,
-                email: email,
-                clerk_id: id
+                email: email
+            }, 
+            update: {
+                first_name: first_name,
+                last_name: last_name,
+                email: email
             }
         })
 

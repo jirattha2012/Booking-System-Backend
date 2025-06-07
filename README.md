@@ -1,9 +1,9 @@
 
-// update prisma at module prisma.js 
+// update prisma at 'module prisma.js'
 npx prisma generate
 
 
-// update prisma at module schema.prisma 
-npx prisma migrate dev --name "comment"
+// update prisma at module 'schema.prisma'
+npx prisma migrate dev --name "comment"     # จะเก็บ log การเปลี่ยนแปลง
 ||
-npx prismad db push
+npx prismad db push     # จะไม่เก็บ log การเปลี่ยนแปลง

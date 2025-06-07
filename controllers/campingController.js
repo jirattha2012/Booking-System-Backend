@@ -1,23 +1,54 @@
+const renderError = require("../utils/renderError")
+const prisma = require('../config/prisma')
 
-exports.getCampingList = (req, res, next) => {
+exports.getCampingList = async (req, res, next) => {
     try {
-        res.json('Camping list')
+        const getCampingList = await prisma.landmark.findMany()
+
+        res.json({ result: getCampingList })
     } catch (error) {
         next(error)
     }
 }
 
-exports.getCampingById = (req, res) => {
+exports.getCampingById = async (req, res, next) => {
     try {
-        res.json('Camping by id')
+        const { id } = req.params
+
+        const getCampingById = await prisma.landmark.findFirst({
+            where: {
+                landmark_id: Number(id)
+            }
+        })
+        
+        res.json({ result: getCampingById })
     } catch (error) {
         next(error)
     }
 }
 
-exports.createCamping = (req, res) => {
+exports.createCamping = async (req, res, next) => {
     try {
-        res.json('Create camping')
+        const { id } = req.user
+        const { title, price, description, category, latitude, longitude } = req.body
+
+        const landmark = await prisma.landmark.create({
+            data: {
+                // ...req.body,
+                title: title,
+                price: price,
+                description: description,
+                category: category,
+                latitude: latitude,
+                longitude: longitude,
+                profile_id: id
+            }
+        })
+
+        res.json({
+            data: landmark,
+            message: 'Create camping success'
+        })
     } catch (error) {
         next(error)
     }
@@ -25,7 +56,7 @@ exports.createCamping = (req, res) => {
 
 exports.updateCamping = (req, res) => {
     try {
-        res.send('Update camping')
+        res.send('Update camping success')
     } catch (error) {
         next(error)
     }
@@ -33,7 +64,7 @@ exports.updateCamping = (req, res) => {
 
 exports.deleteCamping = (req, res) => {
     try {
-        res.send('Delete camping')
+        res.send('Delete camping success')
     } catch (error) {
         next(error)
     }

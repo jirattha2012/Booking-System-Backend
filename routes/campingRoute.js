@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+const  { authenticate } = require('../middlewares/auth')
 const {
     getCampingList,
     getCampingById,
@@ -9,17 +10,16 @@ const {
     deleteCamping
 } = require('../controllers/campingController')
 
-const  { authenticate } = require('../middlewares/auth')
 
 
 // Get camping
-router.get('/camping', authenticate, getCampingList)
+router.get('/camping', getCampingList)
 
 // Get camping by id
 router.get('/camping/:id', getCampingById)
 
 // Create camping
-router.post('/camping', createCamping)
+router.post('/camping', authenticate, createCamping)
 
 // Update camping
 router.put('/camping/:id', updateCamping)

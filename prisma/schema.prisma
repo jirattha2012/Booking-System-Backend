@@ -31,8 +31,10 @@ model Landmark {
   category    String
   latitude    Float
   longitude   Float
+  public_id   String?
+  secure_url  String?
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   profile     Profile  @relation(fields: [profile_id], references: [clerk_id])
-  profile_id   String
+  profile_id  String
 }

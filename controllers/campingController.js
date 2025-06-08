@@ -30,7 +30,7 @@ exports.getCampingById = async (req, res, next) => {
 exports.createCamping = async (req, res, next) => {
     try {
         const { id } = req.user
-        const { title, price, description, category, latitude, longitude } = req.body
+        const { title, price, description, category, latitude, longitude, file } = req.body
 
         const landmark = await prisma.landmark.create({
             data: {
@@ -41,6 +41,8 @@ exports.createCamping = async (req, res, next) => {
                 category: category,
                 latitude: latitude,
                 longitude: longitude,
+                public_id: file.public_id,
+                secure_url: file.secure_url,
                 profile_id: id
             }
         })
